@@ -1,0 +1,505 @@
+<vxml version="2.1">
+	<form id="F1">
+		<block>
+			<prompt>
+				Welcome to Online Deli.<break time="1000"/>
+			</prompt>
+		</block>
+
+		<var name="var1" expr="0" scope="public"/>
+		<var name="str1" expr="'Bread'" scope="public"/>
+
+		<field name="F_1" scope="public">
+			<noinput cond="true" count="1">
+				<prompt>
+					You seem busy. You need to choose from wheat, rye or soured dough. What will you choose?
+				</prompt>
+			</noinput>
+
+			<noinput cond="true" count="2">
+				<prompt>Please make a choice. Wheat, rye or soured dough?</prompt>
+			</noinput>
+
+			<noinput cond="true" count="3">
+				<prompt>
+					You seem busy. Maybe you can try calling in sometime. <break time="1000"/> Goodbye. Have a nice day.
+				</prompt>
+				<disconnect/>
+			</noinput>
+
+			<nomatch cond="true" count="1">
+				<prompt>
+					No match found. Choose from wheat, rye or soured dough.
+				</prompt>
+			</nomatch>
+
+			<nomatch cond="true" count="2">
+				<prompt>
+					No match found. Please make a valid choice. Wheat, rye or soured dough.
+				</prompt>
+			</nomatch>
+
+			<grammar xml:lang="en-us" root="Bread" mode="voice">
+				<rule id="Bread" scope="public">
+				<one-of>
+					<item>wheat</item>
+					<item>rye</item>
+					<item>soured dough</item>
+				</one-of>
+				</rule>
+			</grammar>
+				<prompt>
+					Which type of bread would you like to have? Wheat, Rye or Soured Dough. Cost of each bread is two dollar.
+				</prompt>
+			<filled mode="any">
+				<prompt>
+					Your bread is chosen. <break time="1000"/> You chose <value expr="F_1"/> <break time="1000"/>
+				</prompt>
+
+				<assign name="var1" expr="var1+2"/>
+				<assign name="str1" expr="str1+F_1"/>
+			/>
+			</filled>
+		</field>
+
+		<var name="var2" expr="0" scope="public"/>
+		<var name="str2" expr="'Meat'" scope="public"/>
+
+		<field name="F_2" scope="public">
+			<noinput cond="true" count="1">
+				<prompt>
+					You need to choose from chicken, meat balls or tuna fish. What will you choose?
+				</prompt>
+			</noinput>
+			<noinput cond="true" count="2">
+				<prompt>
+					Please make a choice. Chicken, meat balls or tuna fish?
+				</prompt>
+			</noinput>
+			<noinput cond="true" count="3">
+				<prompt>
+					You seem busy. Maybe you can try calling in sometime.<break time="1000"/>Goodbye. Have a nice day.
+				</prompt>
+				<disconnect/>
+			</noinput>
+			<nomatch cond="true" count="1">
+				<prompt>
+					No match found. Choose from chicken, meat balls or tuna fish.
+				</prompt>
+			</nomatch>
+			<nomatch cond="true" count="2">
+				<prompt>
+					No match found. Please make a valid choice. Chicken, meat balls or tuna fish.
+				</prompt>
+			</nomatch>
+			<grammar xml:lang="en-us" root="Meat" mode="voice">
+				<rule id="Meat" scope="public">
+					<one-of>
+						<item>chicken</item>
+						<item>meat balls</item>
+						<item>tuna fish</item>
+						<item>none</item>
+					</one-of>
+				</rule>
+			</grammar>
+				<prompt>
+					Which type of meat would you like to have? Chicken, Meat Balls, Tuna Fish or none. Cost of meat is three dollar each.
+				</prompt>
+			<filled mode="any">
+				<prompt>
+					Your meat is chosen.<break time="1000"/>You chose<value expr="F_2"/><break time="1000"/>
+				</prompt>
+				<if cond="F_2=='none'">
+					<assign name="var2" expr="var2+0"/>
+				<else/>
+					<assign name="var2" expr="var2+3"/>
+					<assign name="str2" expr="str2+F_2"/>
+				/>
+				</if>
+			</filled>
+		</field>
+
+		<field name="YN" scope="public">
+			<noinput cond="true" count="1">
+				<prompt>Please give an input. You need to say yes or no.</prompt>
+			</noinput>
+			<noinput cond="true" count="2">
+				<prompt>Please make a choice. YES or NO?</prompt>
+			</noinput>
+			<noinput cond="true" count="3">
+				<prompt>You seem busy. Maybe you can try calling in sometime.<break time="1000"/>Goodbye. Have a nice day.
+				</prompt>
+				<disconnect/>
+			</noinput>
+			<nomatch cond="true" count="1">
+				<prompt>No match found. Choose from yes or no.</prompt>
+			</nomatch>
+			<nomatch cond="true" count="2">
+				<prompt>
+					No match found. Please make a valid choice. yes or no.
+				</prompt>
+			</nomatch>
+			<grammar xml:lang="en-us" root="yesno" mode="voice">
+				<rule id="yesno" scope="public">
+					<one-of>
+						<item>yes</item>
+						<item>no</item>
+					</one-of>
+				</rule>
+			</grammar>
+				<prompt>
+					Would you like to add another meat?<break time="1000"/>
+				</prompt>
+			<filled mode="any">
+				<if cond="YN=='yes'">
+					<clear namelist="YN"/>
+					<goto nextitem="F_2"/>
+				</if>
+			</filled>
+		</field>
+
+		<var name="var3" expr="0" scope="public"/>
+		<var name="str3" expr="'Vegetables'" scope="public"/>
+
+		<field name="F_3" scope="public">
+			<noinput cond="true" count="1">
+				<prompt>
+					You need to choose from Lettuce, tomatoes, olives or pickles. What will you choose?
+				</prompt>
+			</noinput>
+			<noinput cond="true" count="2">
+				<prompt>
+					Please make a choice. Lettuce, tomatoes, olives or pickles?
+				</prompt>
+			</noinput>
+			<noinput cond="true" count="3">
+				<prompt>
+					You seem busy. Maybe you can try calling in sometime.<break time="1000"/>
+					Goodbye. Have a nice day.
+				</prompt>
+				<disconnect/>
+			</noinput>
+			<nomatch cond="true" count="1">
+				<prompt>
+					No match found. Choose from lettuce, tomatoes, olives or pickles.
+				</prompt>
+			</nomatch>
+			<nomatch cond="true" count="2">
+				<prompt>
+					No match found. Please make a valid choice. Lettuce, tomatoes, olives or pickles.
+				</prompt>
+			</nomatch>
+
+			<grammar xml:lang="en-us" root="Veg" mode="voice">
+				<rule id="Veg" scope="public">
+					<one-of>
+						<item>lettuce</item>
+						<item>tomato</item>
+						<item>olives</item>
+						<item>pickles</item>
+						<item>none</item>
+					</one-of>
+				</rule>
+			</grammar>
+				<prompt>
+					Which type of vegetables would you like to have? Lettuce, Tomato, Olives, Pickles or none. Vegetables cost fifty cents each.
+				</prompt>
+			<filled mode="any">
+					<prompt>
+						Your vegetable is chosen.<break time="1000"/>
+						You chose
+						<value expr="F_3"/><break time="1000"/>
+					</prompt>
+					<if cond="F_3=='none'">
+						<assign name="var3" expr="var3+0"/>
+					<else/>
+						<assign name="var3" expr="var3+0.5"/>
+						<assign name="str3" expr="str3+F_3"/>
+					</if>
+			</filled>
+		</field>
+		
+		<field name="YN1" scope="public">
+			<noinput cond="true" count="1">
+				<prompt>Please give an input. You need to say yes or no.</prompt>
+			</noinput>
+			<noinput cond="true" count="2">
+				<prompt>Please make a choice. YES or NO?</prompt>
+			</noinput>
+			<noinput cond="true" count="3">
+				<prompt>
+					You seem busy. Maybe you can try calling in sometime.
+					<break time="1000"/>
+					Goodbye. Have a nice day.
+			</prompt>
+			<disconnect/>
+			</noinput>
+			<nomatch cond="true" count="1">
+				<prompt>No match found. Choose from yes or no.</prompt>
+			</nomatch>
+			<nomatch cond="true" count="2">
+				<prompt>
+					No match found. Please make a valid choice. yes or no.
+				</prompt>
+			</nomatch>
+			
+			<grammar xml:lang="en-us" root="yesno" mode="voice">
+				<rule id="yesno" scope="public">
+					<one-of>
+						<item>yes</item>
+						<item>no</item>
+					</one-of>
+				</rule>
+			</grammar>
+				<prompt>
+					Would you like to few more vegetables?
+					<break time="1000"/>
+				</prompt>
+			
+			<filled mode="any">
+				<if cond="YN1=='yes'">
+					<clear namelist="YN1"/>
+					<goto nextitem="F_3"/>
+				</if>
+			</filled>
+		</field>
+			
+		<var name="var4" expr="0" scope="public"/>
+		<var name="str4" expr="'Drinks'" scope="public"/>
+		
+		<field name="F_4" scope="public">
+			<noinput cond="true" count="1">
+				<prompt>
+					You seem busy. You need to choose from Coke, Pepsi or Seven up. What will you choose?
+				</prompt>
+			</noinput>
+			<noinput cond="true" count="2">
+				<prompt>Please make a choice. Coke, Pepsi or Seven up?</prompt>
+			</noinput>
+			<noinput cond="true" count="3">
+				<prompt>
+					You seem busy. Maybe you can try calling in sometime.
+					<break time="1000"/>
+					Goodbye. Have a nice day.
+				</prompt>
+				<disconnect/>
+			</noinput>
+			<nomatch cond="true" count="1">
+				<prompt>
+					No match found. Choose from coke, pepsi or seven up.
+				</prompt>
+			</nomatch>
+			<nomatch cond="true" count="2">
+				<prompt>
+					No match found. Please make a valid choice. Coke, Pepsi or Seven up.
+				</prompt>
+			</nomatch>
+			<grammar xml:lang="en-us" root="Drink" mode="voice">
+				<rule id="Drink" scope="public">
+					<one-of>
+						<item>coke</item>
+						<item>pepsi</item>
+						<item>seven up</item>
+						<item>none</item>
+					</one-of>
+				</rule>
+			</grammar>
+				<prompt>
+					Which type of drink would you like to have? Coke, Pepsi, Seven Up or none. Each drink costs one dollar.
+				</prompt>
+			
+			<filled mode="any">
+				<prompt>
+					Your drink is chosen.
+					<break time="1000"/>
+					You chose
+					<value expr="F_4"/>
+					<break time="1000"/>
+				</prompt>
+				<if cond="F_4=='none'">
+					<assign name="var4" expr="var4+0"/>
+				<else/>
+					<assign name="var4" expr="var4+1"/>
+				</if>
+			</filled>
+		</field>
+			
+		<field name="YN2" scope="public">
+			<noinput cond="true" count="1">
+				<prompt>Please give an input. You need to say yes or no.</prompt>
+			</noinput>
+			<noinput cond="true" count="2">
+				<prompt>Please make a choice. YES or NO?</prompt>
+			</noinput>
+			<noinput cond="true" count="3">
+				<prompt>
+					You seem busy. Maybe you can try calling in sometime.
+					<break time="1000"/>
+					Goodbye. Have a nice day.
+				</prompt>
+				<disconnect/>
+			</noinput>
+			<nomatch cond="true" count="1">
+				<prompt>No match found. Choose from yes or no.</prompt>
+			</nomatch>
+			<nomatch cond="true" count="2">
+				<prompt>
+					No match found. Please make a valid choice. yes or no.
+				</prompt>
+			</nomatch>
+			<grammar xml:lang="en-us" root="yesno" mode="voice">
+				<rule id="yesno" scope="public">
+					<one-of>
+						<item>yes</item>
+						<item>no</item>
+					</one-of>
+				</rule>
+			</grammar>
+				<prompt>
+					Would you like to add another drink?
+					<break time="1000"/>
+				</prompt>
+			
+			<filled mode="any">
+				<if cond="YN2=='yes'">
+					<clear namelist="YN2"/>
+					<goto nextitem="F_4"/>
+				</if>
+			</filled>
+		</field>
+			
+		<field name="F_5" scope="public">
+			<noinput cond="true" count="1">
+				<prompt>Please give an input. You need to say yes or no.</prompt>
+			</noinput>
+			<noinput cond="true" count="2">
+				<prompt>Please make a choice. YES or NO?</prompt>
+			</noinput>
+			<noinput cond="true" count="3">
+				<prompt>
+					You seem busy. Maybe you can try calling in sometime.
+					<break time="1000"/>
+					Goodbye. Have a nice day.
+				</prompt>
+				<disconnect/>
+			</noinput>
+			<nomatch cond="true" count="1">
+				<prompt>No match found. Choose from yes or no.</prompt>
+			</nomatch>
+			<nomatch cond="true" count="2">
+				<prompt>
+					No match found. Please make a valid choice. yes or no.
+				</prompt>
+			</nomatch>
+			<grammar xml:lang="en-us" root="yesno" mode="voice">
+				<rule id="yesno" scope="public">
+					<one-of>
+						<item>yes</item>
+						<item>no</item>
+					</one-of>
+				</rule>
+			</grammar>
+				<prompt>
+					You ordered:
+						<value expr="str1"/>
+						<break time="500"/>
+						<value expr="str2"/>
+						<break time="500"/>
+						<value expr="str3"/>
+						<break time="500"/>
+						<value expr="str4"/>
+						<break time="500"/>
+				</prompt>
+				<prompt>
+					Would you like to edit your order
+					<break time="1000"/>
+				</prompt>
+			<filled mode="any">
+				<if cond="F_5=='no'">
+					<goto nextitem="B_2"/>
+				<else/>
+					<goto nextitem="F_6"/>
+				</if>
+			</filled>
+		</field>
+			
+		<field name="F_6" scope="public">
+			<noinput cond="true" count="1">
+				<prompt>
+					You seem busy. You need to choose from Bread, meat, vegetable or drink. What will you choose?
+				</prompt>
+			</noinput>
+			<noinput cond="true" count="2">
+				<prompt>
+					Please make a choice. Bread, meat, vegetable or drink?
+				</prompt>
+			</noinput>
+			<noinput cond="true" count="3">
+				<prompt>
+					You seem busy. Maybe you can try calling in sometime.
+					<break time="1000"/>
+					Goodbye. Have a nice day.
+				</prompt>
+				<disconnect/>
+			</noinput>
+			<nomatch cond="true" count="1">
+				<prompt>
+					No match found. Choose from bread, meat, vegetable or drink.
+				</prompt>
+			</nomatch>
+			<nomatch cond="true" count="2">
+				<prompt>
+					No match found. Please make a valid choice. Bread, meat, vegetable or drink.
+				</prompt>
+			</nomatch>
+			<grammar xml:lang="en-us" root="ch" mode="voice">
+				<rule id="ch" scope="public">
+					<one-of>
+						<item>bread</item>
+						<item>meat</item>
+						<item>vegetable</item>
+						<item>drink</item>
+					</one-of>
+				</rule>
+			</grammar>
+				<prompt>
+					What would you like to change? bread, meat, vegetable or drink
+				</prompt>
+			<filled mode="any">
+				<if cond="F_6=='bread'">
+					<assign name="var1" expr="0"/>
+					<clear namelist="F_1"/>
+					<goto nextitem="F_1"/>
+				<elseif cond="F_6=='meat'"/>
+					<assign name="var2" expr="0"/>
+					<clear namelist="F_2"/>
+					<clear namelist="YN"/>
+					<goto nextitem="F_2"/>
+				<elseif cond="F_6=='vegetable'"/>
+					<assign name="var3" expr="0"/>
+					<clear namelist="F_3"/>
+					<clear namelist="YN1"/>
+					<goto nextitem="F_3"/>
+				<elseif cond="F_6=='drink'"/>
+					<assign name="var4" expr="0"/>
+					<clear namelist="F_4"/>
+					<clear namelist="YN2"/>
+					<goto nextitem="F_4"/>
+				</if>
+			</filled>
+		</field>
+			
+		<block name="B_2">
+			<prompt>
+				Your total payable amount is
+				<value expr="var1+var2+var3+var4"/>
+				<break time="1000"/>
+				Goodbye
+				<break time="1000"/>
+				Have a nice day.
+			</prompt>
+			<disconnect/>
+</block>
+</form>
+</vxml>
+
